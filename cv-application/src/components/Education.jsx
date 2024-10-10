@@ -1,53 +1,73 @@
-import { useRef } from "react"
+import { useRef, useState } from "react"
+import '../style/fieldset.css'
+import DatePicker from "react-datepicker"
 function Education() {
     let school = useRef(null)
     let degree = useRef(null)
-    let course = useRef(null)
-    let startDate = useRef(null)
-    let endDate = useRef(null)
+    let major = useRef(null)
+    
+    const[startDate, setStartDate] = useState(null)
+    const [endDate, setEndDate] = useState(null)
 
     const handleSubmit = (e) => {
         e.preventDefault()
         const education = {
             school: school.current.value,
             degree: degree.current.value,
-            course: course.current.value,
-            startDate: startDate.current.value,
-            endDate: endDate.current.value,
+            major: major.current.value,
+            startDate: startDate,
+            endDate: endDate,
         }
     }
 
     return (
         <form onSubmit={handleSubmit} className="fieldset">
-            <legend>Education</legend>
-            <label>
-                <input type="text" placeholder="School" required ref={school} />
-            </label>
+            <div className="row">
+                <div className="col-6">
+                    <label>
+                        <input type="text" placeholder="Degree" required ref={degree} />
+                    </label>
+                </div>
+                <div className="col-6">
+                    <label>
+                        <input type="text" placeholder="Major" required ref={major} />
+                    </label>
+                </div>
+            </div>
             <br />
-            <label>
-                Degree:
-                <select id="degree" required ref={degree}>
-                    <option value="">Select Degree</option>
-                    <option value="Bachelor">Bachelor</option>
-                    <option value="Master">Master</option>
-                    <option value="PhD">PhD</option>
-                </select>
-            </label>
+            <div className="row">
+                <div className="col-12">
+                    <label>
+                        <input type="text" placeholder="School" required ref={school} />
+                    </label>
+                </div>
+            </div>
             <br />
-            <label>
-                Course:
-                <input type="text" placeholder="Course" required ref={course} />
-            </label>
-            <br />
-            <label>
-                Start Date:
-                <input type="date" placeholder="Starting date" required ref={startDate} />
-            </label>
-            <br />
-            <label>
-                End Date:
-                <input type="date" ref={endDate} />
-            </label>
+            <div className="row">
+                <div className="col-6">
+                    <label className="w-100">
+                        <DatePicker
+                            selected={startDate}
+                            onChange={(date) => setStartDate(date)}
+                            placeholderText="Start date"
+                            dateFormat="dd-MM-yyyy"
+                            className="form-control"
+                            required
+                        />
+                    </label>
+                </div>
+                <div className="col-6">
+                    <label className="justify-content-end w-100">
+                        <DatePicker
+                            selected={endDate}
+                            onChange={(date) => setEndDate(date)}
+                            placeholderText="End date"
+                            dateFormat="dd-MM-yyyy"
+                            className="form-control"
+                        />
+                    </label>
+                </div>
+            </div>
             <br />
             <input type="submit" value="Add Education" />
         </form>

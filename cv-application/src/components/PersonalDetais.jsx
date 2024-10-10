@@ -2,7 +2,7 @@ import { useRef } from "react";
 import '../style/fieldset.css'
 function PersonalDetails() {
     // Usando useRef para segurar os valores dos inputs
-    let firstName = useRef(null);
+    let fullName = useRef(null);
     let lastName = useRef(null);;
     let email = useRef(null);;
     let phone = useRef(null);;
@@ -13,7 +13,7 @@ function PersonalDetails() {
         e.preventDefault()
         // Atualizando os valores dos inputs
         const details = {
-            firstName: firstName.current.value,
+            fullName: fullName.current.value,
             lastName: lastName.current.value,
             email: email.current.value,
             phone: phone.current.value,
@@ -23,25 +23,29 @@ function PersonalDetails() {
 
     return (
         <form onSubmit={handleSubmit} className="fieldset">
-            <legend>Personal Details</legend>
-            <label>
-                <input type="text" placeholder="First Name" required ref = {firstName} />
-            </label>
+            <div className="row">
+                <div className="col-12">
+                    <label>
+                    <input type="text" placeholder="Full name" required ref = {fullName} />
+                    </label>
+                </div>
+            </div>
+            <br />
+            <div className="row">
+                <div className="col-9">
+                    <label>
+                    <input type="email" placeholder="E-mail" required ref = {email} />
+                    </label>
+                </div>
+                <div className="col-3">
+                    <label>
+                    <input type="tel" placeholder="Phone number" ref = {phone} />
+                    </label>
+                </div>
+            </div>
             <br />
             <label>
-                <input type="text" placeholder="Last Name" required ref = {lastName} />
-            </label>
-            <br />
-            <label>
-                <input type="email" placeholder="E-mail" required ref = {email} />
-            </label>
-            <br />
-            <label>
-                <input type="tel" placeholder="Phone number" ref = {phone} />
-            </label>
-            <br />
-            <label>
-                <input type="text" placeholder="Endereço" ref = {address}></input>
+                <input type="text" placeholder="Address" ref = {address}></input>
             </label>
             <br />
             <input type="submit" value="Update" />

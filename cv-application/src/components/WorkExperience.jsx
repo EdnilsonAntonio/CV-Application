@@ -1,55 +1,91 @@
-import { useRef } from "react";
-import '../style/fieldset.css'
+import { useState, useRef } from "react";
+import DatePicker from "react-datepicker";
+import 'react-datepicker/dist/react-datepicker.css';
+import '../style/fieldset.css';
+
 function WorkExperience() {
-    // Usando useRef para segurar os valores dos inputs
-    let companyName = useRef(null)
-    let position = useRef(null)
-    let startDate = useRef(null)
-    let endDate = useRef(null)
-    let jobDescription = useRef(null)
+    // Usando useRef para outros inputs
+    let companyName = useRef(null);
+    let position = useRef(null);
+    let jobDescription = useRef(null);
+
+    // Usando useState para os inputs de data
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
 
     // Função para capturar os dados do formulário e armazená-los em um objeto
     const handleSubmit = (e) => {
-        e.preventDefault()
-        // Atualizando os valores dos inputs
+        e.preventDefault();
+
         const experience = {
             companyName: companyName.current.value,
             position: position.current.value,
-            startDate: startDate.current.value,
-            endDate: endDate.current.value,
+            startDate: startDate, // usa o estado do DatePicker
+            endDate: endDate, // usa o estado do DatePicker
             jobDescription: jobDescription.current.value,
-        }
-    }
+        };
+
+        console.log(experience);
+        // Aqui você pode enviar os dados para onde precisar
+    };
 
     return (
         <form onSubmit={handleSubmit} className="fieldset">
-            <legend>Work Experience</legend>
-            <label>
-                <input type="text" placeholder="Company Name" required ref={companyName} />
-            </label>
+            <div className="row">
+                <div className="col-12">
+                    <label>
+                        <input type="text" placeholder="Position" required ref={position} />
+                    </label>
+                </div>
+            </div>
             <br />
-            <label>
-                <input type="text" placeholder="Position" required ref={position} />
-            </label>
+            <div className="row">
+                <div className="col-12">
+                    <label>
+                        <input type="text" placeholder="Company name" required ref={companyName} />
+                    </label>
+                </div>
+            </div>
             <br />
-            <label>
-                Start Date:
-                <input type="date" placeholder="Starting date" required ref={startDate} />
-            </label>
+            <div className="row">
+                <div className="col-6">
+                    <label>
+                        <DatePicker
+                            selected={startDate}
+                            onChange={(date) => setStartDate(date)}
+                            placeholderText="Select a start date"
+                            dateFormat="dd-MM-yyyy"
+                            className="form-control"
+                            required
+                        />
+                    </label>
+                </div>
+                <div className="col-6">
+                    <label className="justify-content-end">
+                        <DatePicker
+                        selected={endDate}
+                        onChange={(date) => setEndDate(date)}
+                        placeholderText="Select an end date"
+                        dateFormat="dd-MM-yyyy"
+                        className="form-control"
+                        />
+                    </label>
+                </div>
+            </div>
             <br />
-            <label>
-                End Date:
-                <input type="date" ref={endDate} />
-            </label>
+            <div className="row">
+                <div className="col-12">
+                    <label>
+                        <textarea
+                            placeholder="Job description" ref={jobDescription}
+                        ></textarea>
+                    </label>
+                </div>
+            </div>
             <br />
-            <label>
-                Description:
-                <textarea ref={jobDescription} />
-            </label>
-            <br />
-            <input type="submit" value="Add Experience" />
+            <input type="submit" value="Add Work Experience" />
         </form>
-    )
+    );
 }
 
 export default WorkExperience;
